@@ -1,0 +1,23 @@
+plugins {
+    id 'java-library'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.13'
+}
+
+java {
+    modularity.inferModulePath = true
+}  
+
+javadoc {
+    options {
+    	links = ["https://docs.oracle.com/en/java/javase/15/docs/api/"]
+    }
+}
+
+version = '0.1'
