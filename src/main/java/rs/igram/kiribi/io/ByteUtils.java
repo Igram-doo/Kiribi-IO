@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
  
-package rs.igram.kiribi.util;
+package rs.igram.kiribi.io;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
