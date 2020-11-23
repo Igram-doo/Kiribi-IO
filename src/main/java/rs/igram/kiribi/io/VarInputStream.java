@@ -37,7 +37,7 @@ import java.io.IOException;
 public class VarInputStream extends DataInputStream implements VarInput {
 	/**
 	 * Initializes a newly created <code>VarInputStream</code> object
-	 * so that it reads from the provided <code>VarInput</code>.
+	 * so that it reads from the provided <code>InputStream</code>.
 	 *
 	 * @param in The input stream to read from.
 	 */

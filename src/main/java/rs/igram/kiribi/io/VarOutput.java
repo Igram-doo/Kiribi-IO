@@ -59,7 +59,7 @@ public interface VarOutput extends DataOutput {
 	 * Writes a byte array.
 	 *
 	 * @param b The byte array to be written.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 * @see VarInput#readBytes
 	 */
 	default void writeBytes(byte[] b) throws IOException {
@@ -71,7 +71,7 @@ public interface VarOutput extends DataOutput {
 	 * Writes a long as a single unsigned <code>byte</code>.
 	 *
 	 * @param v A long to be written as a single unsigned <code>byte</code>.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 * @see VarInput#readUInt8
 	 */	
 	default void writeUInt8(long v) throws IOException {
@@ -82,7 +82,7 @@ public interface VarOutput extends DataOutput {
 	 * Writes a long as two unsigned <code>byte</code>s.
 	 *
 	 * @param v A long to be written as two unsigned <code>byte</code>s.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 * @see VarInput#readUInt16
 	 */	
 	default void writeUInt16(long v) throws IOException {
@@ -94,7 +94,7 @@ public interface VarOutput extends DataOutput {
 	 * Writes a long as four unsigned <code>byte</code>s.
 	 *
 	 * @param v A long to be written as four unsigned <code>byte</code>s.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 * @see VarInput#readUInt32
 	 */		
 	default void writeUInt32(long v) throws IOException {
@@ -108,7 +108,7 @@ public interface VarOutput extends DataOutput {
 	 * Writes a long as eight unsigned <code>byte</code>s.
 	 *
 	 * @param v A long to be written as eight unsigned <code>byte</code>s.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 * @see VarInput#readULong64
 	 */		
 	default void writeUInt64(long v) throws IOException {
@@ -126,7 +126,7 @@ public interface VarOutput extends DataOutput {
 	 * Writes a long as two unsigned <code>byte</code>s in bigendian byte order.
 	 *
 	 * @param v A long to be written as two unsigned <code>byte</code>s in bigendian byte order.
-	 * @throws IOException If there was a problem writing the data
+	 * @throws IOException if there was a problem writing the data
 	 * @see VarInput#readUInt16BE
 	 */	
 	default void writeUInt16BE(long v) throws IOException {
@@ -138,7 +138,7 @@ public interface VarOutput extends DataOutput {
 	 * Writes a long as four unsigned <code>byte</code>s in bigendian byte order.
 	 *
 	 * @param v A long to be written as four unsigned <code>byte</code>s in bigendian byte order.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 * @see VarInput#readUInt32BE
 	 */		
 	default void writeUInt32BE(long v) throws IOException {
@@ -152,7 +152,7 @@ public interface VarOutput extends DataOutput {
 	 * Writes a long as eight unsigned <code>byte</code>s in bigendian byte order.
 	 *
 	 * @param v A long to be written as eight unsigned <code>byte</code>s in bigendian byte order.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 * @see VarInput#readULong64BE
 	 */		
 	default void writeUInt64BE(long v) throws IOException {
@@ -170,7 +170,7 @@ public interface VarOutput extends DataOutput {
 	 * Writes a long as a VarInt.
 	 *
 	 * @param v A long to be written as a VarInt.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 * @see VarInput#readVarInt
 	 */	
 	default void writeVarInt(long v) throws IOException {
@@ -193,7 +193,7 @@ public interface VarOutput extends DataOutput {
 	 * Writes a <code>BigInteger</code>.
 	 *
 	 * @param value A <code>BigInteger</code> to be written.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 * @see VarInput#readBigInteger
 	 */		
 	default void writeBigInteger(BigInteger value) throws IOException {	
@@ -204,7 +204,7 @@ public interface VarOutput extends DataOutput {
 	 * Writes a <code>InetSocketAddress</code>.
 	 *
 	 * @param addr A <code>InetSocketAddress</code> to be written.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 * @see VarInput#readAddress
 	 */			
 	default void writeAddress(InetSocketAddress addr) throws IOException {	
@@ -219,7 +219,7 @@ public interface VarOutput extends DataOutput {
 	 * Writes a <code>Encodable</code>.
 	 *
 	 * @param encodable A <code>Encodable</code> to be written.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 * @see VarInput#read(Decoder)
 	 */			
 	default void write(Encodable encodable) throws IOException {
@@ -230,7 +230,7 @@ public interface VarOutput extends DataOutput {
 	 * Writes a <code>Collection</code> of <code>Encodable</code> objects.
 	 *
 	 * @param collection A <code>Collection</code> of <code>Encodable</code> objects to be written.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 * @see VarInput#read(Collection, Decoder)
 	 */		
 	default void write(Collection<? extends Encodable> collection) throws IOException {
@@ -242,7 +242,7 @@ public interface VarOutput extends DataOutput {
 	 * Writes a <code>Collection</code> of <code>Long</code> objects.
 	 *
 	 * @param collection A <code>Collection</code> of <code>Long</code> objects to be written.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 * @see VarInput#readLongs
 	 */		
 	default void writeLongs(Collection<Long> collection) throws IOException {
@@ -254,7 +254,7 @@ public interface VarOutput extends DataOutput {
 	 * Writes a <code>Collection</code> of <code>String</code> objects.
 	 *
 	 * @param collection A <code>Collection</code> of <code>String</code> objects to be written.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 * @see VarInput#readStrings
 	 */		
 	default void writeStrings(Collection<String> collection) throws IOException {
@@ -266,7 +266,7 @@ public interface VarOutput extends DataOutput {
 	 * Writes a map of strings.
 	 *
 	 * @param map The map of strings to be written.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 * @see VarInput#read(Map)
 	 */		
 	default void write(Map<String,String> map) throws IOException {
@@ -281,7 +281,7 @@ public interface VarOutput extends DataOutput {
 	 * Writes a <code>Collection</code> of <code>Byte</code> objects.
 	 *
 	 * @param collection A <code>Collection</code> of <code>Byte</code> objects to be written.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 * @see VarInput#readBytes
 	 */		
 	default void writeBytes(Collection<Byte> collection) throws IOException {
@@ -293,7 +293,7 @@ public interface VarOutput extends DataOutput {
 	 * Writes a <code>Collection</code> of <code>Integer</code> objects.
 	 *
 	 * @param collection A <code>Collection</code> of <code>Integer</code> objects to be written.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 * @see VarInput#readInts
 	 */		
 	default void writeInts(Collection<Integer> collection) throws IOException {
@@ -305,7 +305,7 @@ public interface VarOutput extends DataOutput {
 	 * Writes a <code>Collection</code> of byte arrays.
 	 *
 	 * @param collection A <code>Collection</code> of byte arrays to be written.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 */		
 	default void writeByteArrays(Collection<byte[]> collection) throws IOException {
 		writeVarInt(collection.size());
@@ -317,7 +317,7 @@ public interface VarOutput extends DataOutput {
 	 *
 	* @param <E> The type of the enum.
 	* @param e The <code>Enum</code> to be written.
-	* @throws IOException If there was a problem writing the data.
+	* @throws IOException if there was a problem writing the data.
 	* @see VarInput#readEnum
 	*/	
 	default <E extends Enum> void writeEnum(E e) throws IOException {

@@ -36,7 +36,7 @@ public interface ByteStream {
 	 * Writes a byte array to the stream.
 	 *
 	 * @param b The byte array to be written.
-	 * @throws IOException If there was a problem writing the byte array.
+	 * @throws IOException if there was a problem writing the byte array.
 	 */	
 	void write(byte[] b) throws IOException;
 
@@ -44,7 +44,7 @@ public interface ByteStream {
 	 * Reads a byte array from the stream.
 	 *
 	 * @return The byte array read.
-	 * @throws IOException If there was a problem reading the byte array.
+	 * @throws IOException if there was a problem reading the byte array.
 	 */
 	byte[] read() throws IOException;
 

@@ -37,7 +37,7 @@ import java.io.IOException;
 public class VarOutputStream extends DataOutputStream implements VarOutput {
 	/**
 	 * Initializes a newly created <code>VarOutputStream</code> object
-	 * so that it writes to provided <code>VarOutput</code>.
+	 * so that it writes to provided <code>OutputStream</code>.
 	 *
 	 * @param os The output stream to write to.
 	 */
@@ -58,7 +58,7 @@ public class VarOutputStream extends DataOutputStream implements VarOutput {
 	 * Returns the byte array written to if this instance was not initialized with a <code>OutputStream</code>.
 	 *
 	 * @return The byte array written to.
-	 * @throws IllegalStateException If this instance was initialized with a <code>OutputStream</code>.
+	 * @throws IllegalStateException if this instance was initialized with a <code>OutputStream</code>.
 	 */
 	public byte[] toByteArray() {
 		if(! (out instanceof ByteArrayOutputStream)) throw new IllegalStateException("Not in byte array mode");
@@ -72,7 +72,7 @@ public class VarOutputStream extends DataOutputStream implements VarOutput {
 	}
 	
 	/**
-	 * Convenience method to convert a <code>long</code> as a VarInt to a byte array.
+	 * Convenience method to write a <code>long</code> as a VarInt to a byte array.
 	 * <p>This is equivalent to:
 	 * 
 	 * <pre>
@@ -83,7 +83,7 @@ public class VarOutputStream extends DataOutputStream implements VarOutput {
 	 *
 	 * @param l The <code>long</code> to write.
 	 * @return A byte array containing the byte of the <code>long</code> as a VarInt.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 */	
 	public static byte[] varIntToBytes(long l) throws IOException {
 		VarOutputStream out = new VarOutputStream();

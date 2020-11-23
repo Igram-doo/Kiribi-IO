@@ -61,7 +61,7 @@ public interface VarInput extends DataInput {
 	 * Reads a byte array.
 	 *
 	 * @return The byte array read.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 * @see VarOutput#writeBytes
 	 */
     default byte[] readBytes() throws IOException {
@@ -87,7 +87,7 @@ public interface VarInput extends DataInput {
 	 * Reads a single byte as an unsigned <code>int</code>.
 	 *
 	 * @return A single byte read as an unsigned <code>int</code>.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 * @see VarOutput#writeUInt8
 	 */
 	default int readUInt8() throws IOException {
@@ -99,7 +99,7 @@ public interface VarInput extends DataInput {
 	 * Reads two bytes as an unsigned <code>int</code>.
 	 *
 	 * @return Two bytes read as an unsigned <code>int</code>.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 * @see VarOutput#writeUInt16
 	 */
 	default int readUInt16() throws IOException {
@@ -111,7 +111,7 @@ public interface VarInput extends DataInput {
 	 * Reads four bytes as an unsigned <code>long</code>.
 	 *
 	 * @return Four bytes read as an unsigned <code>long</code>.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 * @see VarOutput#writeUInt32
 	 */
 	default int readUInt32() throws IOException {
@@ -122,7 +122,7 @@ public interface VarInput extends DataInput {
 	 * Reads four bytes as an unsigned <code>long</code>.
 	 *
 	 * @return Four bytes read as an unsigned <code>long</code>.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 */
 	default long readULong32() throws IOException {
 		return (readByte() & 0xFFL) 
@@ -135,7 +135,7 @@ public interface VarInput extends DataInput {
 	 * Reads eight bytes as an unsigned <code>long</code>.
 	 *
 	 * @return Eight bytes read as an unsigned <code>long</code>.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 */
 	default long readULong64() throws IOException {
 		return (readByte() & 0xFFL) 
@@ -152,7 +152,7 @@ public interface VarInput extends DataInput {
 	 * Reads two bytes in bigendian byte order as an unsigned <code>int</code>.
 	 *
 	 * @return Two bytes read in bigendian order as an unsigned <code>int</code>.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 * @see VarOutput#writeUInt16BE
 	 */
 	default int readUInt16BE() throws IOException {
@@ -164,7 +164,7 @@ public interface VarInput extends DataInput {
 	 * Reads four bytes in bigendian byte order as an unsigned <code>int</code>.
 	 *
 	 * @return Four bytes read in bigendian order as an unsigned <code>int</code>.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 * @see VarOutput#writeUInt32BE
 	 */
 	default int readUInt32BE() throws IOException {
@@ -175,7 +175,7 @@ public interface VarInput extends DataInput {
 	 * Reads four bytes in bigendian byte order as an unsigned <code>long</code>.
 	 *
 	 * @return Four bytes read in bigendian order as an unsigned <code>long</code>.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 */
 	default long readULong32BE() throws IOException {
 		return ((readByte() & 0xFFL) << 24) 
@@ -188,7 +188,7 @@ public interface VarInput extends DataInput {
 	 * Reads eight bytes in bigendian byte order as an unsigned <code>long</code>.
 	 *
 	 * @return Eight bytes read in bigendian order as an unsigned <code>long</code>.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 */
 	default long readULong64BE() throws IOException {
 		return ((readByte() & 0xFFL) << 56)
@@ -205,7 +205,7 @@ public interface VarInput extends DataInput {
 	 * Reads a VarInt as an <code>int</code>.
 	 *
 	 * @return Reads a VarInt as an <code>int</code>.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 * @see VarOutput#writeVarInt
 	 */
 	default int readVarInt() throws IOException {
@@ -216,7 +216,7 @@ public interface VarInput extends DataInput {
 	 * Reads a VarLong as a <code>long</code>.
 	 *
 	 * @return Reads a VarLong as an <code>long</code>.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 */
 	default long readVarLong() throws IOException {
 		int b = readUnsignedByte();
@@ -235,7 +235,7 @@ public interface VarInput extends DataInput {
 	/**
 	 * Reads a <code>BigInteger</code>.
 	 * @return Reads a <code>BigInteger</code>.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 * @see VarOutput#writeBigInteger
 	 */
 	default BigInteger readBigInteger() throws IOException {	
@@ -246,7 +246,7 @@ public interface VarInput extends DataInput {
 	 * Reads a <code>InetSocketAddress</code>.
 	 *
 	 * @return Reads a <code>InetSocketAddress</code>.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 * @see VarOutput#writeAddress
 	 */
 	default InetSocketAddress readAddress() throws IOException {	
@@ -260,7 +260,7 @@ public interface VarInput extends DataInput {
 	 * Reads a <code>InetSocketAddress</code>.
 	 *
 	 * @return Reads a <code>InetSocketAddress</code>.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 * @see VarOutput#writeAddress
 	 */
 	default InetSocketAddress readSocketAddress() throws IOException {		
@@ -290,7 +290,7 @@ public interface VarInput extends DataInput {
 	 * Reads a <code>String</code>.
 	 *
 	 * @return Reads a <code>String</code>.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 */
 	default String readVarChar() throws IOException {
 		final StringBuilder buf = new StringBuilder();
@@ -305,7 +305,7 @@ public interface VarInput extends DataInput {
 	 * @param <T> The type of the object to be read.
 	 * @param decoder The <code>Decoder</code> to decode the object.
 	 * @return Reads an <code>Encodable</code> object.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 * @see VarOutput#write(Encodable)
 	 */
 	default <T> T read(Decoder<T> decoder) throws IOException {
@@ -318,7 +318,7 @@ public interface VarInput extends DataInput {
 	 * @param <T> The type of the objects to be read.
 	 * @param collection The collection to put the read and decoded objects into.
 	 * @param decoder The <code>Decoder</code> to decode the objects read.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 * @see VarOutput#write(Collection)
 	 */
 	default <T> void read(Collection<T> collection, Decoder<T> decoder) throws IOException {
@@ -331,7 +331,7 @@ public interface VarInput extends DataInput {
 	 * Reads a collection of <code>Long</code> objects.
 	 *
 	 * @param collection The collection to put the read <code>Long</code> objects into.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 * @see VarOutput#writeLong
 	 */
 	default void readLongs(Collection<Long> collection) throws IOException {
@@ -343,7 +343,7 @@ public interface VarInput extends DataInput {
 	 * Reads a collection of <code>String</code> objects.
 	 *
 	 * @param collection The collection to put the read <code>String</code> objects into.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 * @see VarOutput#writeStrings
 	 */
 	default void readStrings(Collection<String> collection) throws IOException {
@@ -355,7 +355,7 @@ public interface VarInput extends DataInput {
 	 * Reads a map of <code>String</code> objects.
 	 *
 	 * @param map The map to put the read map entries into.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 * @see VarOutput#write(Map)
 	 */
 	default void read(Map<String,String> map) throws IOException {
@@ -371,7 +371,7 @@ public interface VarInput extends DataInput {
 	 * Reads a collection of <code>Byte</code> objects.
 	 *
 	 * @param collection The collection to put the read <code>Byte</code> objects into.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 * @see VarOutput#writeBytes
 	 */
 	default void readBytes(Collection<Byte> collection) throws IOException {
@@ -383,7 +383,7 @@ public interface VarInput extends DataInput {
 	 * Reads a collection of <code>Integer</code> objects.
 	 *
 	 * @param collection The collection to put the read <code>Integer</code> objects into.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 * @see VarOutput#writeInts
 	 */
 	default void readInts(Collection<Integer> collection) throws IOException {
@@ -403,7 +403,7 @@ public interface VarInput extends DataInput {
 	 * @param <E> The type of the enum.
 	 * @param c The class of the enum.
 	 * @return The enum read.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 * @see VarOutput#writeEnum
 	 */
 	default <E extends Enum> E readEnum(Class<E> c) throws IOException {
@@ -415,7 +415,7 @@ public interface VarInput extends DataInput {
 	*
 	* @param chunks The byte arrays to concatenate into a single byte array.
 	* @return The concatenated byte array.
-	* @throws RuntimeException If there was a problem concatenating the byte arrays.
+	* @throws RuntimeException if there was a problem concatenating the byte arrays.
 	*/
 	default  byte[] concat(byte[]... chunks) {
 		try{

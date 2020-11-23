@@ -38,7 +38,7 @@ public interface EncodedStream {
 	 * Writes an encodable object.
 	 *
 	 * @param data The encodable object to write.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 */
 	void write(Encodable data) throws IOException;
 	
@@ -48,7 +48,7 @@ public interface EncodedStream {
 	 * @param <T> The type of the object to decode.
 	 * @param decoder The decoder used to decode the object.
 	 * @return The decoded object.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 */
 	<T> T read(Decoder<T> decoder) throws IOException;
 }

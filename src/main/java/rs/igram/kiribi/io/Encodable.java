@@ -37,7 +37,7 @@ public interface Encodable {
 	 * This method should be invoked to write the object's persistent data.
 	 *
 	 * @param out The <code>VarOutput</code> to write the implementing class' persistent data to.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 */
 	void write(VarOutput out) throws IOException;
 
@@ -45,7 +45,7 @@ public interface Encodable {
 	 * This method should be invoked to write the object's persistent data.
 	 *
 	 * @param out The <code>VarOutput</code> to write the implementing class' persistent data to.
-	 * @throws UncheckedIOException Throws an UncheckedIOException wrapping the original IOException.
+	 * @throws UncheckedIOException an UncheckedIOException wrapping the original IOException.
 	 */
 	default void writeUnchecked(VarOutput out) {
 		try{
@@ -59,7 +59,7 @@ public interface Encodable {
 	 * Encodes this object's persistent data into a byte array.
 	 *
 	 * @return A byte array containing this object's persistent data.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 */
 	default byte[] encode() throws IOException {
 		try(VarOutputStream out = new VarOutputStream()){
@@ -73,7 +73,7 @@ public interface Encodable {
 	 * Encodes this object's persistent data into a byte array.
 	 *
 	 * @return A byte array containing this object's persistent data.
-	 * @throws UncheckedIOException Throws an UncheckedIOException wrapping the original IOException.
+	 * @throws UncheckedIOException an UncheckedIOException wrapping the original IOException.
 	 */
 	default byte[] encodeUnchecked() {
 		try{
@@ -86,10 +86,10 @@ public interface Encodable {
 	/**
    	 * Creates a deep copy of this object.
 	 *
-	 * @param <T> the type of this object.
-	 * @param decoder the <code>Decoder</code> for this object.
+	 * @param <T> The type of this object.
+	 * @param decoder The <code>Decoder</code> for this object.
 	 * @return A deep copy of this object.
-	 * @throws IOException If there was a problem writing the data.
+	 * @throws IOException if there was a problem writing the data.
 	 * @see Decoder
 	 */
 	default <T> T copy(Decoder<T> decoder) throws IOException {
@@ -101,10 +101,10 @@ public interface Encodable {
 	/**
    	 * Creates a deep copy of this object.
 	 *
-	 * @param <T> the type of this object.
-	 * @param decoder the <code>Decoder</code> for this object.
+	 * @param <T> The type of this object.
+	 * @param decoder The <code>Decoder</code> for this object.
 	 * @return A deep copy of this object.
-	 * @throws UncheckedIOException Throws an UncheckedIOException wrapping the original IOException.
+	 * @throws UncheckedIOException an UncheckedIOException wrapping the original IOException.
 	 * @see Decoder
 	 */
 	default <T> T copyUnchecked(Decoder<T> decoder) {

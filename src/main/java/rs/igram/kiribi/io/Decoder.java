@@ -50,7 +50,7 @@ import java.io.UncheckedIOException;
  * ....
  *
  * VarInput in = ...
- * Foo = in.read(Foo::new);
+ * Foo foo = in.read(Foo::new);
  * </pre>
  * 
  * @param <T> the type
@@ -65,7 +65,7 @@ public interface Decoder<T> {
 	 *
 	 * @param in The <code>VarInput</code> to read from.
 	 * @return An object of type <code>T</code>.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 * @see VarInput
 	 */	
 	T read(VarInput in) throws IOException;
@@ -75,7 +75,7 @@ public interface Decoder<T> {
 	 *
 	 * @param in The <code>VarInput</code> to read from.
 	 * @return An object of type <code>T</code>.
-	 * @throws  UncheckedIOException Throws an UncheckedIOException wrapping the original IOException.
+	 * @throws  UncheckedIOException an UncheckedIOException wrapping the original IOException.
 	 * @see VarInput
 	 */	
 	default T readUnchecked(VarInput in) {
@@ -91,7 +91,7 @@ public interface Decoder<T> {
 	 *
 	 * @param b The byte array to read from.
 	 * @return An object of type <code>T</code>.
-	 * @throws IOException If there was a problem reading the data.
+	 * @throws IOException if there was a problem reading the data.
 	 */	
 	default T decode(byte[] b) throws IOException {
 		return read(new VarInputStream(b));
@@ -102,7 +102,7 @@ public interface Decoder<T> {
 	 *
 	 * @param b The byte array to read from.
 	 * @return An object of type <code>T</code>.
-	 * @throws UncheckedIOException Throws an UncheckedIOException wrapping the original IOException.
+	 * @throws UncheckedIOException an UncheckedIOException wrapping the original IOException.
 	 */	
 	default T decodeUnchecked(byte[] b) {
 		return readUnchecked(new VarInputStream(b));
