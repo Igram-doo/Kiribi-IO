@@ -31,6 +31,7 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.IntBuffer;
@@ -43,13 +44,28 @@ import java.util.List;
  * @author Michael Sargent
  */
 public abstract class ByteUtils {	
+	private ByteUtils() {}
+	
+	/**
+	 * Reverses the order of bytes in a byte array.
+	 *
+	 * @param b The source byte arrays.
+	 * @return A byte array containing the bytes of the source byte array in reverse order.
+	 */		
 	public static byte[] reverse(byte[] b) {
 		final int l = b.length;
 		final byte[] buf = new byte[l];
 		for (int i = 0; i < l; i++) buf[i] = b[l - 1 - i];
 		return buf;
 	}
-
+	
+	/**
+	 * Concatenates an array of byte arrays into a single byte array.
+	 *
+	 * @param chunks The array of byte arrays to concatenate.
+	 * @return The concatenated byte array.
+	 * @see concat(List)
+	 */	
 	public static byte[] concat(byte[]... chunks) {
 		try{
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -60,8 +76,15 @@ public abstract class ByteUtils {
 			throw new RuntimeException("WTF");
 		}
 	}
-
-	public static byte[] concat(List<byte[]> chunks){
+	
+	/**
+	 * Concatenates an list of byte arrays into a single byte array.
+	 *
+	 * @param chunks The list of byte arrays to concatenate.
+	 * @return The concatenated byte array.
+	 * @see concat(byte[]...)
+	 */	
+	public static byte[] concat(List<byte[]> chunks) {
 		try{
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			for(byte[] chunk : chunks) baos.write(chunk);
@@ -71,33 +94,96 @@ public abstract class ByteUtils {
 			throw new RuntimeException("WTF");
 		}
 	}
-
+	
+	/**
+	 * Performs logical <b>or</b> on two byte arrays.
+	 *
+	 * @param a The target byte arrays.
+	 * @param b The test byte arrays.
+	 * @param L The number of bytes to logically <b>or</b>.
+	 * @throws ArrayIndexOutOfBoundsException if the length of a or b is less than L.
+	 * @see and
+	 * @see xor
+	 * @see matches
+	 */	
 	public static void or(byte[] a, byte[] b, int L){
 		for(int i = 0; i < L; i++) a[i] |= b[i];
 	}
-
+	
+	/**
+	 * Performs logical <b>and</b> or on two byte arrays.
+	 *
+	 * @param a The target byte arrays.
+	 * @param b The test byte arrays.
+	 * @param L The number of bytes to logically <b>and</b>.
+	 * @throws ArrayIndexOutOfBoundsException if the length of a or b is less than L.
+	 * @see or
+	 * @see xor
+	 * @see matches
+	 */	
 	public static void and(byte[] a, byte[] b, int L){
 		for(int i = 0; i < L; i++) a[i] &= b[i];
 	}
 	
+	/**
+	 * Performs logical <b>xor</b> on two byte arrays.
+	 *
+	 * @param a The target byte arrays.
+	 * @param b The test byte arrays.
+	 * @param L The number of bytes to logically <b>xor</b>.
+	 * @return A byte array containg the results of logically <b>xor</b> <code>a</code> and <code>b</code>.
+	 * @throws ArrayIndexOutOfBoundsException if the length of a or b is less than L.
+	 * @see or
+	 * @see and
+	 * @see matches
+	 */		
 	public static byte[] xor(byte[] a, byte[] b, int L){
 		byte[] c = new byte[L];
 		for(int i = 0; i < L; i++) c[i] = (byte)(a[i] ^ b[i]);
 		return c;
 	}
 
-	// a & b = b
+	// a & b = b	
+	/**
+	 * Returns <code>true</code> if for each of the first L bytes the followings holds: <code>a[i] &amp; b[i] = b[i]</code>,
+	 * <code>false</code> otherwise.
+	 *
+	 * @param a The target byte arrays.
+	 * @param b The test byte arrays.
+	 * @param L The number of bytes to test.
+	 * @return <code>true</code> if for each of the first L bytes the followings holds: <code>a[i] &amp; b[i] = b[i]</code>,
+	 * <code>false</code> otherwise.
+	 * @throws ArrayIndexOutOfBoundsException if the length of a or b is less than L.
+	 * @see or
+	 * @see and
+	 * @see xor
+	 */		
 	public static boolean matches(byte[] a, byte[] b, int L){
 		for(int i = 0; i < L; i++) if((a[i] & b[i]) != b[i]) return false;
 		return true;
 	}
 
+	/**
+	 * Returns a byte array containing the first L bytes of the provided array.
+	 *
+	 * @param data The byte arrays to crop.
+	 * @param L The number of bytes to copy.
+	 * @return a byte array containing the first L bytes of the provided array.
+	 * @throws ArrayIndexOutOfBoundsException if the length of data is less than L.
+	 */		
 	public static byte[] crop(byte[] data, int L){
 		final byte[] b = new byte[L];
 		System.arraycopy(data, 0, b, 0, L);
 		return b;
 	}
 		
+	/**
+	 * Returns the var size of a <code>long</code>.
+	 *
+	 * @param v The <code>long</code> whose size is to be determined.
+	 * @return the var size of a <code>long</code>.
+	 * @throws IllegalArgumentException if the provided <code>long</code> is negative.
+	 */		
 	public static int varSize(long v) {
 		if(v < 0l) throw new IllegalArgumentException("Input must be non-negative: "+v);
 		if(v < 0xFD) return 1;
@@ -106,37 +192,85 @@ public abstract class ByteUtils {
 		return 8;
 	}
 	
+	/**
+	 * Copies the bytes of an <code>int</code> into a byte array.
+	 *
+	 * @param b The byte array into which to copy the <code>int</code>.
+	 * @param pos The position in the byte array to copy the <code>int</code>.
+	 * @param v The <code>int</code> to copy.
+	 */	        	
 	public static void put(byte[] b, int pos, int v) {
 		ByteBuffer buf = ByteBuffer.wrap(b);
 		buf.putInt(pos, v);
 	}
 	
+	/**
+	 * Copies the bytes of a <code>long</code> into a byte array.
+	 *
+	 * @param b The byte array into which to copy the <code>long</code>.
+	 * @param pos The position in the byte array to copy the <code>long</code>.
+	 * @param v The <code>long</code> to copy.
+	 */		
 	public static void put(byte[] b, int pos, long v) {
 		ByteBuffer buf = ByteBuffer.wrap(b);
 		buf.putLong(pos, v);
 	}
-
+	
+	/**
+	 * Converts <code>long</code> to a byte array.
+	 *
+	 * @param v The <code>long</code> to convert.
+	 * @return a byte array containing the <code>long</code>.
+	 */	        
 	public static byte[] longToBytes(long v) {
 		byte[] b = new byte[8];
 		put(b, 0, v);
 		return b;
 	}
 	
+	/**
+	 * Extracts a <code>long</code> from a byte array.
+	 *
+	 * @param b The source byte array.
+	 * @return a <code>long</code> from the provided byte array.
+	 */	  	
 	public static long bytesToLong(byte[] b) {
 		return getLong(b, 0);
 	}
 	
+	/**
+	 * Extracts an <code>int</code> from a byte array.
+	 *
+	 * @param b The source byte array.
+	 * @param pos The position in the source byte array to begin the extraction.
+	 * @return an <code>int</code> from the provided byte array.
+	 */		
 	public static int getInt(byte[] b, int pos) {
 		ByteBuffer buf = ByteBuffer.wrap(b);
 		return buf.getInt(pos);
 	}
 	
+	/**
+	 * Extracts a <code>long</code> from a byte array.
+	 *
+	 * @param b The source byte array.
+	 * @param pos The position in the source byte array to begin the extraction.
+	 * @return a <code>long</code> from the provided byte array.
+	 */	  
 	public static long getLong(byte[] b, int pos) {
 		ByteBuffer buf = ByteBuffer.wrap(b);
 		return buf.getLong(pos);
 	}
 	
-	public static void inet(byte[] b, int offset, SocketAddress address) throws Exception {
+	/**
+	 * Copies the bytes of a <code>SocketAddress</code> into a byte array.
+	 *	 
+	 * @param b The byte array into which to copy the <code>SocketAddress</code>.
+	 * @param offset The position in the byte array to copy the <code>SocketAddress</code>.
+	 * @param address The <code>SocketAddress</code> to copy.
+	 * @see inet(byte[], int)
+	 */			
+	public static void inet(byte[] b, int offset, SocketAddress address) {
 		InetSocketAddress inet = ((InetSocketAddress)address);
 		if(inet.getAddress() instanceof Inet6Address){
 			System.arraycopy(inet.getAddress().getAddress(), 0, b, offset, 16);
@@ -148,9 +282,17 @@ public abstract class ByteUtils {
 		}
 		put(b, offset + 16, inet.getPort());
 	}
-	
-		
-	public static SocketAddress inet(byte[] src, int offset) throws Exception {
+	    
+	/**
+	 * Extracts a <code>SocketAddress</code> from a byte array.
+	 *
+	 * @param src The source byte array.
+	 * @param offset The position in the source byte array to begin the extraction.
+	 * @return a <code>SocketAddress</code> from the provided byte array.
+	 * @throws UnknownHostException if there was a problem performing the operation.
+	 * @see inet(byte[], int, SocketAddress)
+	 */	    				
+	public static SocketAddress inet(byte[] src, int offset) throws UnknownHostException {
 		byte[] inet = null;
 		if(src[offset] == (byte)0xff && src[offset + 1] == (byte)0xff){
 			inet = extract(src, offset + 2, 4);
@@ -161,14 +303,29 @@ public abstract class ByteUtils {
 		int port = getInt(src, offset + 16);
 		return new InetSocketAddress(add, port);
 	}
-		
+    
+	/**
+	 * Extracts a byte array from a byte array.
+	 *
+	 * @param src The source byte array.
+	 * @param pos The position in the source byte array to begin the extraction.
+	 * @param length The length of the byte array to extract.
+	 * @return a byte array from the provided byte array.
+	 */	    		
 	public static byte[] extract(byte[] src, int pos, int length) {
 		byte[] dst = new byte[length];
 		System.arraycopy(src, pos, dst, 0, length);
 		return dst;
 	}
 	
-	// unsigned int as long
+	// unsigned int as long	
+	/**
+	 * Copies the bytes of a <code>long</code> representing an unsigned int into a byte array.
+	 *	 
+	 * @param l The <code>long</code> to copy.
+	 * @param buf The byte array into which to copy the <code>long</code>.
+	 * @param offset The position in the byte array to copy the <code>long</code>.
+	 */		
 	public static void unsignedIntToBytes(long l, byte[] buf, int offset) {
         buf[offset] = (byte) ((l & 0xFF000000L) >>> 24);
         buf[offset + 1] = (byte) ((l & 0x00FF0000L) >>> 16);
@@ -176,13 +333,26 @@ public abstract class ByteUtils {
         buf[offset + 3] = (byte) ((l & 0x000000FFL));
     }
 
-	// unsigned int as long
+	// unsigned int as long    
+	/**
+	 * Converts an unsigned int to a byte array.
+	 *
+	 * @param l The unsigned int to convert.
+	 * @return a byte array containing the unsigned int.
+	 */	        
 	public static byte[] unsignedIntToBytes(long l) {
 		byte[] b = new byte[4];
 		unsignedIntToBytes(l, b, 0);
 		return b;
     }
     
+	/**
+	 * Extracts an unsigned int from a byte array.
+	 *
+	 * @param buf The byte array to extract from.
+	 * @param offset The offset in the byte array to extract from.
+	 * @return an unsigned int as a <code>long</code>.
+	 */	        
     public static long bytesToUnsignedInt(byte[] buf, int offset) {
     	int l1, l2, l3, l4;
     	l1 = (0x000000FF & ((int)buf[offset]));
@@ -194,6 +364,12 @@ public abstract class ByteUtils {
         return l;
     }
     
+	/**
+	 * Returns an int array from a byte array.
+	 *
+	 * @param b The byte array to convert.
+	 * @return an int array from the provided byte array.
+	 */	    
     public static int[] ints(byte[] b) {
     	if(b.length % 4 != 0) throw new IllegalArgumentException();
     	IntBuffer buf =  ByteBuffer.wrap(b).asIntBuffer();
@@ -203,6 +379,12 @@ public abstract class ByteUtils {
     	return ints;
     }
     
+	/**
+	 * Returns a byte array from a char array.
+	 *
+	 * @param chars The char array to convert.
+	 * @return a byte array from the provided char array.
+	 */	    
     public static byte[] bytes(char... chars) {
     	ByteBuffer buf = ByteBuffer.allocate(2 * chars.length);
     	for(int i = 0; i < chars.length; i++){
@@ -211,7 +393,13 @@ public abstract class ByteUtils {
     	
     	return buf.array();
     }
-    
+
+	/**
+	 * Returns a byte array from an int array.
+	 *
+	 * @param ints The int array to convert.
+	 * @return a byte array from the provided int array.
+	 */		   
     public static byte[] bytes(int... ints) {
     	ByteBuffer buf = ByteBuffer.allocate(4 * ints.length);
     	for(int i = 0; i < ints.length; i++){
@@ -220,7 +408,13 @@ public abstract class ByteUtils {
     	
     	return buf.array();
     }
-    
+
+	/**
+	 * Returns a <code>CharSquence</code> from an int array.
+	 *
+	 * @param ints The int array to convert.
+	 * @return a <code>CharSquence</code> from an int array.
+	 */		    
     public static CharSequence charseq(int... ints) {
     	ByteBuffer buf = ByteBuffer.allocate(4 * ints.length);
     	for(int i = 0; i < ints.length; i++){
@@ -230,6 +424,12 @@ public abstract class ByteUtils {
     	return buf.asCharBuffer();
     }
 
+	/**
+	 * Returns a char array from an int array.
+	 *
+	 * @param ints The int array to convert.
+	 * @return a char array from the provided int array.
+	 */		
     public static char[] chars(int... ints) {
     	ByteBuffer buf = ByteBuffer.allocate(4 * ints.length);
     	for(int i = 0; i < ints.length; i++){
