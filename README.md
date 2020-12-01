@@ -5,19 +5,24 @@ Provides classes and interfaces to read and write objects using the Kiribi IO Fr
 Provides classes and interfaces to read and write objects using the Kiribi IO Framework.
 
 ### Features
-To do
+* Highly compact serialization.
+* VarInt support.
+* Byte array utilities.
 
 ### Overview
 Provides classes and interfaces to read and write objects using the Kiribi IO Framework.
 
 ##### Encodable Objects
-To do
+Defines the contract to be encodable. Encodable objects must implement the Encodable interface and provide a constructor which takes a VarInput as a single argument. Note that no class meta-data is serialized. It is up to the developer to know which classes are being decoded.
 
 ##### VarInput
-Interface for reading Encodable objects.
+Interface for reading Encodable objects. VarInts and serveral other data types are also supported.
 
 ##### VarOutput
-Interface for writing Encodable objects.
+Interface for writing Encodable objects. VarInts and serveral other data types are also supported.
+
+##### ByteUtils
+Various static utility methods for byte arrays.
 
 ### Code Example
 
@@ -45,11 +50,11 @@ Interface for writing Encodable objects.
 
 
 ### Module Dependencies
+##### Requires
+* java.base
+
 ##### Exports
 * rs.igram.kiribi.io
 
-### Requirements
-To do
-
-### Known Issues
-To do
+### To Do
+Determine minimum supported Java version.
