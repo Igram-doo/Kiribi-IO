@@ -58,3 +58,4 @@ Various static utility methods for byte arrays.
 
 ### To Do
 * Determine minimum supported Java version.
+* Finish unit tests.
