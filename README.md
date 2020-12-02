@@ -57,4 +57,4 @@ Various static utility methods for byte arrays.
 * rs.igram.kiribi.io
 
 ### To Do
-Determine minimum supported Java version.
+* Determine minimum supported Java version.

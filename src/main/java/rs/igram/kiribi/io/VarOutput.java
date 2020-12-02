@@ -175,12 +175,12 @@ public interface VarOutput extends DataOutput {
 	 */	
 	default void writeVarInt(long v) throws IOException {
 		if(v < 0l) throw new IllegalArgumentException("Input must be non-negative: "+v);
-		if(v < 0xFD) {
+		if(v < 0xFDl) {
 			writeUInt8(v);
-		}else if(v <= 0xFFFF) {
+		}else if(v <= 0xFFFFl) {
 			write(0xFCB);
 			writeUInt16(v);
-		}else if(v <= 0xFFFFFFFF) {
+		}else if(v <= 0xFFFFFFFFl) {
 			write(0xFEB);
 			writeUInt32(v);
 		}else {

@@ -186,9 +186,9 @@ public abstract class ByteUtils {
 	 */		
 	public static int varSize(long v) {
 		if(v < 0l) throw new IllegalArgumentException("Input must be non-negative: "+v);
-		if(v < 0xFD) return 1;
-		if(v <= 0xFFFF) return 2;
-		if(v <= 0xFFFFFFFF) return 4;
+		if(v < 0xFDl) return 1;
+		if(v <= 0xFFFFl) return 2;
+		if(v <= 0xFFFFFFFFl) return 4;
 		return 8;
 	}
 	
@@ -400,7 +400,7 @@ public abstract class ByteUtils {
 	 * @param ints The int array to convert.
 	 * @return a byte array from the provided int array.
 	 */		   
-    public static byte[] bytes(int... ints) {
+    public static byte[] bytes(int ... ints) {
     	ByteBuffer buf = ByteBuffer.allocate(4 * ints.length);
     	for(int i = 0; i < ints.length; i++){
     		buf.putInt(ints[i]);
