@@ -120,41 +120,78 @@ public class ByteUtilsTest {
        
        assertTrue(Arrays.equals(src, result));
    }
-/*   
+   
    @Test
    public void testAnd() throws IOException {
+       byte[] a = new byte[]{0x38, 0x12};
+       byte[] b = new byte[]{0x02, 0x07, 0x44};
+       byte[] expected = new byte[]{0x02 & 0x38, 0x07 & 0x12};
        
+       and(a, b, 2);
+       
+       assertTrue(Arrays.equals(a, expected));
    }
    
    @Test
    public void testOr() throws IOException {
+       byte[] a = new byte[]{0x38, 0x12};
+       byte[] b = new byte[]{0x02, 0x07, 0x44};
+       byte[] expected = new byte[]{0x02 | 0x38, 0x07 | 0x12};
        
+       or(a, b, 2);
+       
+       assertTrue(Arrays.equals(a, expected));
    }
    
    @Test
    public void testXOR() throws IOException {
+       byte[] a = new byte[]{0x38, 0x12};
+       byte[] b = new byte[]{0x02, 0x07, 0x44};
+       byte[] expected = new byte[]{0x02 ^ 0x38, 0x07 ^ 0x12};
        
+       byte[] result = xor(a, b, 2);
+       
+       assertTrue(Arrays.equals(expected, result));
    }
    
    @Test
    public void testMatches() throws IOException {
+       byte[] a = new byte[]{0x38, 0x12};
+       byte[] b = new byte[]{0x02, 0x07, 0x44};
        
+       assertFalse(matches(a, b, 2));
+       
+       or(a, b, 2);
+       
+       assertTrue(matches(a, b, 2));
    }
    
    @Test
    public void testPutGetInt() throws IOException {
+       int i = -7788;
+       int pos = 50;
+       byte[] buf = bytes(0, 100);
        
+   	   put(buf, pos, i);
+   	   int result = getInt(buf, pos);
+   	   
+   	   assertEquals(i, result);
    }
    
    @Test
    public void testPutGetLong() throws IOException {
+       long l = 778835l;
+       int pos = 50;
+       byte[] buf = bytes(0, 100);
        
+   	   put(buf, pos, l);
+   	   long result = getLong(buf, pos);
+   	   
+   	   assertEquals(l, result);
    }
-*/   
+   
    @Test
    public void testVarSize() throws IOException {
-   System.out.println("FUCK: "+ 0x0001FFFFl + " " + 0xFFFFFFFFl);
-   	   assertTrue(((long)0x0001FFFFl) < ((long)0xFFFFFFFFl));
        long l = -100l;
        try {
        	   int size = varSize(l);

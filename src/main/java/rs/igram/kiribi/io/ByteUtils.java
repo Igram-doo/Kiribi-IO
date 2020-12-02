@@ -106,7 +106,7 @@ public abstract class ByteUtils {
 	 * @see xor
 	 * @see matches
 	 */	
-	public static void or(byte[] a, byte[] b, int L){
+	public static void or(byte[] a, byte[] b, int L) {
 		for(int i = 0; i < L; i++) a[i] |= b[i];
 	}
 	
@@ -121,7 +121,7 @@ public abstract class ByteUtils {
 	 * @see xor
 	 * @see matches
 	 */	
-	public static void and(byte[] a, byte[] b, int L){
+	public static void and(byte[] a, byte[] b, int L) {
 		for(int i = 0; i < L; i++) a[i] &= b[i];
 	}
 	
@@ -137,7 +137,7 @@ public abstract class ByteUtils {
 	 * @see and
 	 * @see matches
 	 */		
-	public static byte[] xor(byte[] a, byte[] b, int L){
+	public static byte[] xor(byte[] a, byte[] b, int L) {
 		byte[] c = new byte[L];
 		for(int i = 0; i < L; i++) c[i] = (byte)(a[i] ^ b[i]);
 		return c;

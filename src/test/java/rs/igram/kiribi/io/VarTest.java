@@ -27,6 +27,7 @@ package rs.igram.kiribi.io;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.SocketAddress;
 import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -62,7 +63,6 @@ public class VarTest {
        random(b1);
        out.writeBytes(b1);
        byte[] b2 = in(out).readBytes();
-       
        assertTrue(Arrays.equals(b1,b2));
        
        out = new VarOutputStream();
@@ -70,13 +70,30 @@ public class VarTest {
        out.writeUInt8(l1);
        int l2 = in(out).readUInt8();
        assertTrue(((int)l1) == l2);
-/*       
+       
+       // wildcard
        out = new VarOutputStream();
-       InetSocketAddress a1 = SubBlob.defaultSubBlob().host();
-       out.writeAddress(a1);
-       InetSocketAddress a2 = in(out).readAddress();
-       assertEquals(a1, a2);
-*/       
+       InetSocketAddress src = new InetSocketAddress(7777);
+       out.writeAddress(src);
+       InetSocketAddress result = in(out).readAddress();     
+       assertEquals(src, result);
+       
+       // ipv4 loopback
+       out = new VarOutputStream();
+       InetAddress addr = InetAddress.getByName​("127.0.0.1");
+       src = new InetSocketAddress(addr, 7778);
+       out.writeAddress(src);
+       result = in(out).readAddress();     
+       assertEquals(src, result);
+       
+       // ipv6 loopback
+       out = new VarOutputStream();
+       addr = InetAddress.getByName​("0:0:0:0:0:ffff:7f00:1");
+       src = new InetSocketAddress(addr, 7779);
+       out.writeAddress(src);
+       result = in(out).readAddress();     
+       assertEquals(src, result);
+    
        out = new VarOutputStream();
        Set<Long> s1 = new HashSet<>();
        for(int i = 0; i < 10; i++) s1.add(random());
