@@ -25,6 +25,7 @@
 package rs.igram.kiribi.io;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -57,22 +58,154 @@ public class VarTest {
 	}
 
    @Test
-   public void testIO() throws IOException {
+   public void testReadWriteBytes() throws IOException {
        VarOutputStream out = new VarOutputStream();
        byte[] b1 = new byte[137];
        random(b1);
        out.writeBytes(b1);
        byte[] b2 = in(out).readBytes();
        assertTrue(Arrays.equals(b1,b2));
-       
-       out = new VarOutputStream();
-       int l1 = 87;
+   }    
+
+   @Test
+   public void testReadWriteUInt8() throws IOException {
+       VarOutputStream out = new VarOutputStream();
+       long l1 = 87l;
        out.writeUInt8(l1);
-       int l2 = in(out).readUInt8();
-       assertTrue(((int)l1) == l2);
+       long l2 = in(out).readUInt8();
+       assertEquals(l1, l2);
+   }     
+
+   @Test
+   public void testReadWriteUInt16() throws IOException {
+       VarOutputStream out = new VarOutputStream();
+       long l1 = 487l;
+       out.writeUInt16(l1);
+       long l2 = in(out).readUInt16();
+       assertEquals(l1, l2);
+   }     
+
+   @Test
+   public void testReadWriteUInt32() throws IOException {
+       VarOutputStream out = new VarOutputStream();
+       long l1 = 65530l;
+       out.writeUInt32(l1);
+       long l2 = in(out).readUInt32();
+       assertEquals(l1, l2);
+   }     
+
+   @Test
+   public void testReadWriteUInt64() throws IOException {
+       VarOutputStream out = new VarOutputStream();
+       long l1 = 274211l;
+       out.writeUInt64(l1);
+       long l2 = in(out).readULong64();
+       assertEquals(l1, l2);
+   }     
+
+   @Test
+   public void testReadWriteUInt16BE() throws IOException {
+       VarOutputStream out = new VarOutputStream();
+       long l1 = 487l;
+       out.writeUInt16BE(l1);
+       long l2 = in(out).readUInt16BE();
+       assertEquals(l1, l2);
+   }     
+
+   @Test
+   public void testReadWriteUInt32BE() throws IOException {
+       VarOutputStream out = new VarOutputStream();
+       long l1 = 65530l;
+       out.writeUInt32BE(l1);
+       long l2 = in(out).readUInt32BE();
+       assertEquals(l1, l2);
+   }     
+
+   @Test
+   public void testReadWriteUInt64BE() throws IOException {
+       VarOutputStream out = new VarOutputStream();
+       long l1 = 274211l;
+       out.writeUInt64BE(l1);
+       long l2 = in(out).readULong64BE();
+       assertEquals(l1, l2);
+   }     
+
+   @Test
+   public void testReadWriteVarInt() throws IOException {
+       VarOutputStream out = new VarOutputStream();
+       long l = -100l;
+       try {
+       	   out.writeVarInt(l);
+       	   assertTrue(false);
+       } catch(IllegalArgumentException e) {
+       	   assertTrue(true);
+       }
        
-       // wildcard
+       l = 0x1Cl;
        out = new VarOutputStream();
+       out.writeVarInt(l);
+       long l2 = in(out).readVarLong();
+       assertEquals(l, l2);
+       
+       l = 0xFCl;
+       out = new VarOutputStream();
+       out.writeVarInt(l);
+       l2 = in(out).readVarLong();
+       assertEquals(l, l2);
+       
+       l = 0xFDl;
+       out = new VarOutputStream();
+       out.writeVarInt(l);
+       l2 = in(out).readVarLong();
+       assertEquals(l, l2);
+       
+       l = 0xFFFEl;
+       out = new VarOutputStream();
+       out.writeVarInt(l);
+       l2 = in(out).readVarLong();
+       assertEquals(l, l2);
+       
+       l = 0xFFFFl;
+       out = new VarOutputStream();
+       out.writeVarInt(l);
+       l2 = in(out).readVarLong();
+       assertEquals(l, l2);
+       
+       l = 0x0001FFFFl;
+       out = new VarOutputStream();
+       out.writeVarInt(l);
+       l2 = in(out).readVarLong();
+       assertEquals(l, l2);
+       
+       l = 0xFFFFFFFFl;
+       out = new VarOutputStream();
+       out.writeVarInt(l);
+       l2 = in(out).readVarLong();
+       assertEquals(l, l2);
+       
+       l = 0x00000001FFFFFFFFl;
+       out = new VarOutputStream();
+       out.writeVarInt(l);
+       l2 = in(out).readVarLong();
+       assertEquals(l, l2);
+
+   }     
+
+   @Test
+   public void testReadWriteBigInteger() throws IOException {
+       VarOutputStream out = new VarOutputStream();
+       byte[] b = new byte[137];
+       random(b);
+       BigInteger i1 = new BigInteger(b);
+       out.writeBigInteger(i1);
+       BigInteger i2 = in(out).readBigInteger();
+       assertEquals(i1, i2);
+   }    
+
+   @Test
+   public void testReadWriteSocketAddress() throws IOException {
+       // wildcard
+       VarOutputStream out = new VarOutputStream();
        InetSocketAddress src = new InetSocketAddress(7777);
        out.writeAddress(src);
        InetSocketAddress result = in(out).readAddress();     
@@ -93,16 +226,42 @@ public class VarTest {
        out.writeAddress(src);
        result = in(out).readAddress();     
        assertEquals(src, result);
-    
-       out = new VarOutputStream();
+   }
+
+   @Test
+   public void testReadWriteEncodable() throws IOException {
+       VarOutputStream out = new VarOutputStream();
+       TestEncodable t1 = new TestEncodable();
+       out.write(t1);
+       Object t2 = in(out).read(TestEncodable::new);
+       assertEquals(t1, t2);
+   }    
+
+   @Test
+   public void testReadWriteEncodableCollection() throws IOException {
+       VarOutputStream out = new VarOutputStream();
+       Set<TestEncodable> se1 = new HashSet<>();
+       for(int i = 0; i < 10; i++) se1.add(new TestEncodable());
+       out.write(se1);
+       Set<TestEncodable> se2 = new HashSet<>();
+       in(out).read(se2, TestEncodable::new);
+       assertEquals(se1, se2);      
+   }    
+
+   @Test
+   public void testReadWriteLongCollection() throws IOException {
+       VarOutputStream out = new VarOutputStream();
        Set<Long> s1 = new HashSet<>();
        for(int i = 0; i < 10; i++) s1.add(random());
        out.writeLongs(s1);
        Set<Long> s2 = new HashSet<>();
        in(out).readLongs(s2);
        assertEquals(s1, s2);
-       
-       out = new VarOutputStream();
+   }    
+
+   @Test
+   public void testReadWriteStringCollection() throws IOException {
+       VarOutputStream out = new VarOutputStream();
        Set<String> st1 = new HashSet<>();
        st1.add("dog");
        st1.add("cat");
@@ -111,33 +270,11 @@ public class VarTest {
        Set<String> st2 = new HashSet<>();
        in(out).readStrings(st2);
        assertEquals(st1, st2);
-       
-       out = new VarOutputStream();
-       Set<Byte> sb1 = new HashSet<>();
-       sb1.add((byte)-45);
-       sb1.add((byte)38);
-       sb1.add((byte)111);
-       out.writeBytes(sb1);
-       Set<Byte> sb2 = new HashSet<>();
-       in(out).readBytes(sb2);
-       assertEquals(sb1, sb2);
-       
-       out = new VarOutputStream();
-       Set<Integer> si1 = new HashSet<>();
-       si1.add(2245);
-       si1.add(-238);
-       si1.add(3111);
-       out.writeInts(si1);
-       Set<Integer> si2 = new HashSet<>();
-       in(out).readInts(si2);
-       assertEquals(si1, si2);
-       
-       out = new VarOutputStream();
-       out.writeEnum(TestEnum.B);
-       Object e2 = in(out).readEnum(TestEnum.class);
-       assertEquals(TestEnum.B, e2);
-       
-       out = new VarOutputStream();
+   }    
+
+   @Test
+   public void testReadWriteStringStringMap() throws IOException {
+       VarOutputStream out = new VarOutputStream();
        Map<String,String> m1 = new HashMap<>();
        m1.put("a", "dog");
        m1.put("b", "cat");
@@ -146,20 +283,40 @@ public class VarTest {
        Map<String,String> m2 = new HashMap<>();
        in(out).read(m2);
        assertEquals(m1, m2);
-       
-       out = new VarOutputStream();
-       TestEncodable t1 = new TestEncodable();
-       out.write(t1);
-       Object t2 = in(out).read(TestEncodable::new);
-       assertEquals(t1, t2);
-       
-       out = new VarOutputStream();
-       Set<TestEncodable> se1 = new HashSet<>();
-       for(int i = 0; i < 10; i++) se1.add(new TestEncodable());
-       out.write(se1);
-       Set<TestEncodable> se2 = new HashSet<>();
-       in(out).read(se2, TestEncodable::new);
-       assertEquals(se1, se2);       
+   }    
+
+   @Test
+   public void testReadWriteByteCollection() throws IOException {
+       VarOutputStream out = new VarOutputStream();
+       Set<Byte> sb1 = new HashSet<>();
+       sb1.add((byte)-45);
+       sb1.add((byte)38);
+       sb1.add((byte)111);
+       out.writeBytes(sb1);
+       Set<Byte> sb2 = new HashSet<>();
+       in(out).readBytes(sb2);
+       assertEquals(sb1, sb2);
+   }    
+
+   @Test
+   public void testReadWriteIntegerCollection() throws IOException {
+       VarOutputStream out = new VarOutputStream();
+       Set<Integer> si1 = new HashSet<>();
+       si1.add(2245);
+       si1.add(-238);
+       si1.add(3111);
+       out.writeInts(si1);
+       Set<Integer> si2 = new HashSet<>();
+       in(out).readInts(si2);
+       assertEquals(si1, si2);
+   }    
+      
+   @Test
+   public void testReadWriteEnum() throws IOException {
+       VarOutputStream out = new VarOutputStream();
+       out.writeEnum(TestEnum.B);
+       Object e2 = in(out).readEnum(TestEnum.class);
+       assertEquals(TestEnum.B, e2);
    }
    
    private static VarInputStream in(VarOutputStream out) {

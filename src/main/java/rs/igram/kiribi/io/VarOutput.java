@@ -178,13 +178,13 @@ public interface VarOutput extends DataOutput {
 		if(v < 0xFDl) {
 			writeUInt8(v);
 		}else if(v <= 0xFFFFl) {
-			write(0xFCB);
+			write(0xFD);
 			writeUInt16(v);
 		}else if(v <= 0xFFFFFFFFl) {
-			write(0xFEB);
+			write(0xFE);
 			writeUInt32(v);
 		}else {
-			write(0xFFB);
+			write(0xFF);
 			writeUInt64(v);
 		}
 	}

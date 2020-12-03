@@ -198,6 +198,7 @@ public abstract class ByteUtils {
 	 * @param b The byte array into which to copy the <code>int</code>.
 	 * @param pos The position in the byte array to copy the <code>int</code>.
 	 * @param v The <code>int</code> to copy.
+	 * @see getInt
 	 */	        	
 	public static void put(byte[] b, int pos, int v) {
 		ByteBuffer buf = ByteBuffer.wrap(b);
@@ -210,6 +211,7 @@ public abstract class ByteUtils {
 	 * @param b The byte array into which to copy the <code>long</code>.
 	 * @param pos The position in the byte array to copy the <code>long</code>.
 	 * @param v The <code>long</code> to copy.
+	 * @see getLong
 	 */		
 	public static void put(byte[] b, int pos, long v) {
 		ByteBuffer buf = ByteBuffer.wrap(b);
@@ -221,6 +223,7 @@ public abstract class ByteUtils {
 	 *
 	 * @param v The <code>long</code> to convert.
 	 * @return a byte array containing the <code>long</code>.
+	 * @see bytesToLong
 	 */	        
 	public static byte[] longToBytes(long v) {
 		byte[] b = new byte[8];
@@ -233,6 +236,7 @@ public abstract class ByteUtils {
 	 *
 	 * @param b The source byte array.
 	 * @return a <code>long</code> from the provided byte array.
+	 * @see longToBytes
 	 */	  	
 	public static long bytesToLong(byte[] b) {
 		return getLong(b, 0);
@@ -244,6 +248,7 @@ public abstract class ByteUtils {
 	 * @param b The source byte array.
 	 * @param pos The position in the source byte array to begin the extraction.
 	 * @return an <code>int</code> from the provided byte array.
+	 * @see put(byte[], int, int)
 	 */		
 	public static int getInt(byte[] b, int pos) {
 		ByteBuffer buf = ByteBuffer.wrap(b);
@@ -256,6 +261,7 @@ public abstract class ByteUtils {
 	 * @param b The source byte array.
 	 * @param pos The position in the source byte array to begin the extraction.
 	 * @return a <code>long</code> from the provided byte array.
+	 * @see put(byte[], int, long)
 	 */	  
 	public static long getLong(byte[] b, int pos) {
 		ByteBuffer buf = ByteBuffer.wrap(b);

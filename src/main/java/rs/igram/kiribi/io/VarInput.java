@@ -103,8 +103,9 @@ public interface VarInput extends DataInput {
 	 * @see VarOutput#writeUInt16
 	 */
 	default int readUInt16() throws IOException {
-		return (readByte() & 0xFF) 
-		| ((readByte() & 0xFF) << 8);
+		return (int)readULong16();
+//		return (readByte() & 0xFF) 
+//		| ((readByte() & 0xFF) << 8);
 	}
 	
 	/**
@@ -116,6 +117,17 @@ public interface VarInput extends DataInput {
 	 */
 	default int readUInt32() throws IOException {
 		return (int)readULong32();
+	}
+	
+	/**
+	 * Reads four bytes as an unsigned <code>long</code>.
+	 *
+	 * @return Four bytes read as an unsigned <code>long</code>.
+	 * @throws IOException if there was a problem reading the data.
+	 */
+	default long readULong16() throws IOException {
+		return (readByte() & 0xFFL) 
+		| ((readByte() & 0xFFL) << 8);
 	}
 	
 	/**
@@ -222,13 +234,13 @@ public interface VarInput extends DataInput {
 		int b = readUnsignedByte();
 		switch(b){
 		// X16	
-		case 0xFD: return readUInt16();
+		case 0xFD: return readULong16();
 		// X32	
 		case 0xFE: return readULong32();
 		// X64	
 		case 0xFF: return readULong64();
 		// X8
-		default: return b;
+		default: return (long)b;
 		}
 	}
 
