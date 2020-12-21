@@ -166,12 +166,25 @@ public abstract class ByteUtils {
 	/**
 	 * Returns a byte array containing the first L bytes of the provided array.
 	 *
-	 * @param data The byte arrays to crop.
+	 * @param data The byte array to crop.
 	 * @param L The number of bytes to copy.
 	 * @return a byte array containing the first L bytes of the provided array.
 	 * @throws ArrayIndexOutOfBoundsException if the length of data is less than L.
 	 */		
 	public static byte[] crop(byte[] data, int L){
+		final byte[] b = new byte[L];
+		System.arraycopy(data, 0, b, 0, L);
+		return b;
+	}
+
+	/**
+	 * Returns a copy of the given byte array.
+	 *
+	 * @param data The byte array to copy.
+	 * @return a copy of the given byte array.
+	 */		
+	public static byte[] copy(byte[] data){
+		final int L = data.length;
 		final byte[] b = new byte[L];
 		System.arraycopy(data, 0, b, 0, L);
 		return b;
