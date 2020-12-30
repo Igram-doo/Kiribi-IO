@@ -56,5 +56,4 @@ Various static utility methods for byte arrays.
 ##### Exports
 * rs.igram.kiribi.io
 
-### To Do
-* Determine minimum supported Java version.
+Java version 11
