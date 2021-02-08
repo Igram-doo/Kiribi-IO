@@ -209,7 +209,7 @@ public interface VarOutput extends DataOutput {
 	 */			
 	default void writeAddress(InetSocketAddress addr) throws IOException {	
 		//todo
-		byte[] b = addr.getAddress().getAddress();
+		var b = addr.getAddress().getAddress();
 		writeInt(b.length);
 		write(b);
 		writeUInt16BE(addr.getPort());

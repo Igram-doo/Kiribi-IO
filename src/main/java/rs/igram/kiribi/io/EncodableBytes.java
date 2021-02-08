@@ -72,7 +72,7 @@ public class EncodableBytes implements Encodable {
    	@Override   	
    	public boolean equals(Object o) {
    		if(o == null || !(o instanceof EncodableBytes)) return false;
-   		EncodableBytes t = (EncodableBytes)o;
+   		var t = (EncodableBytes)o;
    		return Arrays.equals(bytes, t.bytes);
    	}
 }

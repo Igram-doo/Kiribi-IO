@@ -86,7 +86,7 @@ public class VarOutputStream extends DataOutputStream implements VarOutput {
 	 * @throws IOException if there was a problem writing the data.
 	 */	
 	public static byte[] varIntToBytes(long l) throws IOException {
-		VarOutputStream out = new VarOutputStream();
+		var out = new VarOutputStream();
 		out.writeVarInt(l);
 		return out.toByteArray();
 	}	

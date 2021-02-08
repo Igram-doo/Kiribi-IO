@@ -65,8 +65,8 @@ public interface VarInput extends DataInput {
 	 * @see VarOutput#writeBytes
 	 */
     default byte[] readBytes() throws IOException {
-    	int L = readInt();
-    	byte[] b = new byte[L];
+    	var L = readInt();
+    	var b = new byte[L];
     	if(L > 0) readFully(b);
     	return b;
     }
@@ -231,7 +231,7 @@ public interface VarInput extends DataInput {
 	 * @throws IOException if there was a problem reading the data.
 	 */
 	default long readVarLong() throws IOException {
-		int b = readUnsignedByte();
+		var b = readUnsignedByte();
 		switch(b){
 		// X16	
 		case 0xFD: return readULong16();
@@ -263,8 +263,8 @@ public interface VarInput extends DataInput {
 	 */
 	default InetSocketAddress readAddress() throws IOException {	
 		//todo
-		byte[] b = readBytes();
-		int port = readUInt16BE();
+		var b = readBytes();
+		var port = readUInt16BE();
 		return new InetSocketAddress(InetAddress.getByAddress(b), port);
 	}
 	
@@ -278,23 +278,23 @@ public interface VarInput extends DataInput {
 	default InetSocketAddress readSocketAddress() throws IOException {		
 		// first 12 bytes of inet address. If this equals IPV4 then its an IPV4 address and only use last 4 bytes.
 		// Otherwise its an IPV6 address and concat the first 12 bytes and last 4 bytes
-		final byte[] a = new byte[12];
+		final var a = new byte[12];
 		readFully(a);
 		// last 4 bytes of inet address
-		final byte[] b = new byte[4];
+		final var b = new byte[4];
 		readFully(b);
 
 		// null ?
 		if(Arrays.equals(new byte[16], concat(a, b))) throw new IOException("Invalid address: null");
 			
-		final byte[] ipv4 = new byte[12];
+		final var ipv4 = new byte[12];
 		ipv4[10] = (byte)0xff;
 		ipv4[11] = (byte)0xff;
 		
-		final InetAddress addr = Arrays.equals(a, ipv4) ?
+		final var addr = Arrays.equals(a, ipv4) ?
 			InetAddress.getByAddress(b) :
 			InetAddress.getByAddress(concat(a, b));
-		final int port = readUInt16BE();
+		final var port = readUInt16BE();
 		return new InetSocketAddress(addr, port);
 	}
 
@@ -305,8 +305,8 @@ public interface VarInput extends DataInput {
 	 * @throws IOException if there was a problem reading the data.
 	 */
 	default String readVarChar() throws IOException {
-		final StringBuilder buf = new StringBuilder();
-		final int l = readVarInt();
+		final var buf = new StringBuilder();
+		final var l = readVarInt();
 		for(int i = 0; i < l; i++) buf.appendCodePoint(readByte()  & 0xFF);
 		return buf.toString();
 	}
@@ -334,7 +334,7 @@ public interface VarInput extends DataInput {
 	 * @see VarOutput#write(Collection)
 	 */
 	default <T> void read(Collection<T> collection, Decoder<T> decoder) throws IOException {
-		int L = readVarInt();
+		var L = readVarInt();
 		if(decoder == null) return;
 		for(int i = 0; i < L; i++) collection.add(decoder.read(this));
 	}
@@ -347,7 +347,7 @@ public interface VarInput extends DataInput {
 	 * @see VarOutput#writeLong
 	 */
 	default void readLongs(Collection<Long> collection) throws IOException {
-		int L = readVarInt();
+		var L = readVarInt();
 		for(int i = 0; i < L; i++) collection.add(readLong());
 	}
 	
@@ -359,7 +359,7 @@ public interface VarInput extends DataInput {
 	 * @see VarOutput#writeStrings
 	 */
 	default void readStrings(Collection<String> collection) throws IOException {
-		int L = readVarInt();
+		var L = readVarInt();
 		for(int i = 0; i < L; i++) collection.add(readUTF());
 	}
 	
@@ -371,10 +371,10 @@ public interface VarInput extends DataInput {
 	 * @see VarOutput#write(Map)
 	 */
 	default void read(Map<String,String> map) throws IOException {
-		int L = readVarInt();
+		var L = readVarInt();
 		for(int i = 0; i < L; i++){
-			String key = readUTF();
-			String value = readUTF();
+			var key = readUTF();
+			var value = readUTF();
 			map.put(key, value);
 		}
 	}
@@ -387,7 +387,7 @@ public interface VarInput extends DataInput {
 	 * @see VarOutput#writeBytes
 	 */
 	default void readBytes(Collection<Byte> collection) throws IOException {
-		int L = readVarInt();
+		var L = readVarInt();
 		for(int i = 0; i < L; i++) collection.add(readByte());
 	}
 	
@@ -399,7 +399,7 @@ public interface VarInput extends DataInput {
 	 * @see VarOutput#writeInts
 	 */
 	default void readInts(Collection<Integer> collection) throws IOException {
-		int L = readVarInt();
+		var L = readVarInt();
 		for(int i = 0; i < L; i++) collection.add(readInt());
 	}
 /*	
@@ -431,7 +431,7 @@ public interface VarInput extends DataInput {
 	*/
 	default  byte[] concat(byte[]... chunks) {
 		try{
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			var baos = new ByteArrayOutputStream();
 			for(byte[] chunk : chunks) baos.write(chunk);
 			return baos.toByteArray();
 		}catch(IOException e){
