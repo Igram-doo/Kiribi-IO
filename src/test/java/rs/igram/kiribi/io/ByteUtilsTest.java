@@ -47,66 +47,66 @@ import static rs.igram.kiribi.io.ByteUtils.*;
 public class ByteUtilsTest {
    @Test
    public void testCrop() throws IOException {
-       byte[] src = bytes(0, 100);
-       byte[] expected = bytes(0, 50);
-       byte[] result = crop(src, 50);
+       var src = bytes(0, 100);
+       var expected = bytes(0, 50);
+       var result = crop(src, 50);
        
        assertTrue(Arrays.equals(expected, result));
    }
    
    @Test
    public void testExtract() throws IOException {
-       byte[] src = bytes(0, 100);
-       byte[] expected = bytes(50, 10);
-       byte[] result = extract(src, 50, 10);
+       var src = bytes(0, 100);
+       var expected = bytes(50, 10);
+       var result = extract(src, 50, 10);
        
        assertTrue(Arrays.equals(expected, result));
    }
    
    @Test
    public void testConcat() throws IOException {
-       byte[] src1 = bytes(0, 100);
-       byte[] src2 = bytes(100, 100);
-       byte[] src3 = bytes(200, 100);
-       byte[] expected = bytes(0, 300);
-       byte[] result = concat(src1, src2, src3);
+       var src1 = bytes(0, 100);
+       var src2 = bytes(100, 100);
+       var src3 = bytes(200, 100);
+       var expected = bytes(0, 300);
+       var result = concat(src1, src2, src3);
        
        assertTrue(Arrays.equals(expected, result));
        
-       List<byte[]> src = List.of(src1, src2, src3);
+       var src = List.of(src1, src2, src3);
        result = concat(src);
        assertTrue(Arrays.equals(expected, result));
    }
    
    @Test
    public void testReverse() throws IOException {
-       byte[] src = bytes(0, 5);
-       byte[] expected = new byte[] {0x04, 0x03, 0x02, 0x01, 0x00};
-       byte[] result = reverse(src);
+       var src = bytes(0, 5);
+       var expected = new byte[] {0x04, 0x03, 0x02, 0x01, 0x00};
+       var result = reverse(src);
        
        assertTrue(Arrays.equals(expected, result));
    }
    
    @Test
    public void testLongToFromBytes() throws IOException {
-       long src = -264887030433l;
-       byte[] tmp = longToBytes(src);
-       long result = bytesToLong(tmp);
+       var src = -264887030433l;
+       var tmp = longToBytes(src);
+       var result = bytesToLong(tmp);
        
        assertEquals(src, result);
    }
    
    @Test
    public void testUnsignedIntToFromBytes() throws IOException {
-       long l = 778835l;
-       int offset = 50;
-       byte[] buf = bytes(0, 100);
+       var l = 778835l;
+       var offset = 50;
+       var buf = bytes(0, 100);
        unsignedIntToBytes(l,buf, offset);
-       long result = bytesToUnsignedInt(buf, offset);
+       var result = bytesToUnsignedInt(buf, offset);
        
        assertEquals(l, result);
        
-       byte[] tmp = unsignedIntToBytes(l);
+       var tmp = unsignedIntToBytes(l);
        result = bytesToUnsignedInt(tmp, 0);
        
        assertEquals(l, result);
@@ -114,18 +114,18 @@ public class ByteUtilsTest {
    
    @Test
    public void testInts() throws IOException {
-       int[] src = new int[]{1,2,3,4,5};
-       byte[] tmp = ByteUtils.bytes(src);
-       int[] result = ints(tmp);
+       var src = new int[]{1,2,3,4,5};
+       var tmp = ByteUtils.bytes(src);
+       var result = ints(tmp);
        
        assertTrue(Arrays.equals(src, result));
    }
    
    @Test
    public void testAnd() throws IOException {
-       byte[] a = new byte[]{0x38, 0x12};
-       byte[] b = new byte[]{0x02, 0x07, 0x44};
-       byte[] expected = new byte[]{0x02 & 0x38, 0x07 & 0x12};
+       var a = new byte[]{0x38, 0x12};
+       var b = new byte[]{0x02, 0x07, 0x44};
+       var expected = new byte[]{0x02 & 0x38, 0x07 & 0x12};
        
        and(a, b, 2);
        
@@ -134,9 +134,9 @@ public class ByteUtilsTest {
    
    @Test
    public void testOr() throws IOException {
-       byte[] a = new byte[]{0x38, 0x12};
-       byte[] b = new byte[]{0x02, 0x07, 0x44};
-       byte[] expected = new byte[]{0x02 | 0x38, 0x07 | 0x12};
+       var a = new byte[]{0x38, 0x12};
+       var b = new byte[]{0x02, 0x07, 0x44};
+       var expected = new byte[]{0x02 | 0x38, 0x07 | 0x12};
        
        or(a, b, 2);
        
@@ -145,19 +145,19 @@ public class ByteUtilsTest {
    
    @Test
    public void testXOR() throws IOException {
-       byte[] a = new byte[]{0x38, 0x12};
-       byte[] b = new byte[]{0x02, 0x07, 0x44};
-       byte[] expected = new byte[]{0x02 ^ 0x38, 0x07 ^ 0x12};
+       var a = new byte[]{0x38, 0x12};
+       var b = new byte[]{0x02, 0x07, 0x44};
+       var expected = new byte[]{0x02 ^ 0x38, 0x07 ^ 0x12};
        
-       byte[] result = xor(a, b, 2);
+       var result = xor(a, b, 2);
        
        assertTrue(Arrays.equals(expected, result));
    }
    
    @Test
    public void testMatches() throws IOException {
-       byte[] a = new byte[]{0x38, 0x12};
-       byte[] b = new byte[]{0x02, 0x07, 0x44};
+       var a = new byte[]{0x38, 0x12};
+       var b = new byte[]{0x02, 0x07, 0x44};
        
        assertFalse(matches(a, b, 2));
        
@@ -168,40 +168,40 @@ public class ByteUtilsTest {
    
    @Test
    public void testPutGetInt() throws IOException {
-       int i = -7788;
-       int pos = 50;
-       byte[] buf = bytes(0, 100);
+       var i = -7788;
+       var pos = 50;
+       var buf = bytes(0, 100);
        
    	   put(buf, pos, i);
-   	   int result = getInt(buf, pos);
+   	   var result = getInt(buf, pos);
    	   
    	   assertEquals(i, result);
    }
    
    @Test
    public void testPutGetLong() throws IOException {
-       long l = 778835l;
-       int pos = 50;
-       byte[] buf = bytes(0, 100);
+       var l = 778835l;
+       var pos = 50;
+       var buf = bytes(0, 100);
        
    	   put(buf, pos, l);
-   	   long result = getLong(buf, pos);
+   	   var result = getLong(buf, pos);
    	   
    	   assertEquals(l, result);
    }
    
    @Test
    public void testVarSize() throws IOException {
-       long l = -100l;
+       var l = -100l;
        try {
-       	   int size = varSize(l);
+       	   var size = varSize(l);
        	   assertTrue(false);
        } catch(IllegalArgumentException e) {
        	   assertTrue(true);
        }
        
        l = 0xFCl;
-       int result = varSize(l);
+       var result = varSize(l);
        assertEquals(1, result);
        
        l = 0xFDl;
@@ -231,19 +231,19 @@ public class ByteUtilsTest {
   
    @Test
    public void testInet() throws Exception {
-   	   int offset = 50;
-       byte[] buf = bytes(0, 100);
+   	   var offset = 50;
+       var buf = bytes(0, 100);
        // wildcard
-       SocketAddress src = new InetSocketAddress(7777);
+       var src = new InetSocketAddress(7777);
        inet(buf, offset, src);
-       SocketAddress result = inet(buf, offset);
+       var result = inet(buf, offset);
        
        assertEquals(src, result);
        
        offset = 17;
        buf = bytes(0, 100);
        // ipv4 loopback
-       InetAddress addr = InetAddress.getByName​("127.0.0.1");
+       var addr = InetAddress.getByName​("127.0.0.1");
        src = new InetSocketAddress(addr, 7778);
        inet(buf, offset, src);
        result = inet(buf, offset);
@@ -262,8 +262,8 @@ public class ByteUtilsTest {
    }
    
    private static byte[] bytes(int s, int l) {
-   	   byte[] b = new byte[l];
-   	   int v = s;
+   	   var b = new byte[l];
+   	   var v = s;
    	   for(int i = 0; i < l; i++) b[i] = (byte)s++;
    	   return b;
    }
